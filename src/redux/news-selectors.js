@@ -4,6 +4,9 @@ export const getItems = (state) => {
 export const getIsPreloaded = (state) => {
     return state.newsPage.isPreloaded;
 }
+export const getIsPreloadedBottom = (state) => {
+    return state.newsPage.isPreloadedBottom;
+}
 export const getIsDisabled = (state) => {
     return state.newsPage.isDisabled;
 }

@@ -4,12 +4,12 @@ import { setEmptyChildrens, requestMainKids, requestKids, requestAllKids } from 
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getItems } from '../../redux/news-selectors';
-import { getIsPreloaded, getIsDisabled } from '../../redux/news-selectors';
+import { getIsPreloaded, getIsPreloadedBottom, getIsDisabled } from '../../redux/news-selectors';
 import preloader from '../../assets/preloader.gif';
 import { compose } from 'redux';
 
 const NewsContainer = ({ requestMainKids, setEmptyChildrens, items,
-    isPreloaded, isDisabled, requestKids, requestAllKids, ...props }) => {
+    isPreloaded, isDisabled, requestKids, requestAllKids, isPreloadedBottom, ...props }) => {
 
     const [isClicked, setIsClicked] = useState({});
     const addChildrens = async (id, items) => {
@@ -29,10 +29,10 @@ const NewsContainer = ({ requestMainKids, setEmptyChildrens, items,
         requestMainKids(props.match.params.id, items);
     }, [])
     useEffect(() => {
-        const interval = setInterval(async() => {
+        const interval = setInterval(async () => {
             await requestAllKids(props.match.params.id, items);  //// PROBLEMS!!!!
             setIsClicked({})
-        }, 6000000)
+        }, 800000)
         return () => clearInterval(interval)
     }, [items.length])
     useEffect(() => {
@@ -41,14 +41,15 @@ const NewsContainer = ({ requestMainKids, setEmptyChildrens, items,
 
     return isPreloaded
         ? <img className='preloader' src={preloader} alt='' />
-        : <News items={items} isPreloaded={isPreloaded} 
-            idOfStory={props.match.params.id} isDisabled={isDisabled} requestAllKids={requestAllKids} addChildrens={addChildrens} isClicked={isClicked} setIsClicked={setIsClicked}/>
+        : <News items={items} isPreloaded={isPreloaded}
+            idOfStory={props.match.params.id} isDisabled={isDisabled} requestAllKids={requestAllKids} addChildrens={addChildrens} isClicked={isClicked} setIsClicked={setIsClicked} isPreloadedBottom={isPreloadedBottom} />
 }
 
 
 const mapStateToProps = (state) => ({
     items: getItems(state),
     isPreloaded: getIsPreloaded(state),
+    isPreloadedBottom: getIsPreloadedBottom(state),
     isDisabled: getIsDisabled(state)
 })
 

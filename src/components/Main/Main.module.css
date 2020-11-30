@@ -95,11 +95,7 @@ a{
 .disabled_button:after{
     transform: rotate(3600deg);
 }
-.preloader__bottom{
-    margin: 0 auto;
-    width: 200px;
-    display: block;
-}
+
 
 @media(max-width: 540px){
     .news__title{

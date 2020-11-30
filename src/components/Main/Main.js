@@ -22,7 +22,7 @@ const Main = ({ stories, reloadStories, idsOfNewStories, isDisabled, isPreloaded
             </NavLink> : null)}
 
         </div>
-        {isPreloadedBottom && <img className={c.preloader__bottom} src={preloader1} alt=''/>}
+        {isPreloadedBottom && <img className='preloader__bottom' src={preloader1} alt=''/>}
     </div>
 }
 
