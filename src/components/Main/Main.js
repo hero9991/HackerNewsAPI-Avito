@@ -8,7 +8,7 @@ const Main = ({ stories, reloadStories, idsOfNewStories, isDisabled, isPreloaded
     if (stories.length < 1) return null
     return <div className={c.main}>
         <button className={c.button + ' ' + (isDisabled && c.disabled_button)} disabled={isDisabled} onClick={() => reloadStories(idsOfNewStories)}>
-            {isDisabled ? 'страница обновляется...' : 'обновить'}
+            {isDisabled ? 'The page is updating...' : 'Update'}
         </button>
         <div className={c.news__items}>
             {stories.map(newsItem => newsItem ? <NavLink className={c.news__item} to={newsItem ? `/News/${newsItem.id}` : '/News'} key={newsItem.id}><div className={c.news__text}>

@@ -6,7 +6,7 @@ import NewsContainer from './components/News/NewsContainer';
 function App() {
   return (
     <div className="App">
-        <Route path='/Main' render={() => <MainContainer />}/>
+        <Route path='/HackerNewsAPI-Avito' render={() => <MainContainer />}/>
         <Route path='/News/:id?' render={() => <NewsContainer />}/>
     </div>
   );
