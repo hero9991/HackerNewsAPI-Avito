@@ -1,0 +1,127 @@
+.news__item{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1050px;
+    margin: 0 auto 20px;
+    padding: 10px;
+    background-color: aliceblue;
+    min-height: 70px;
+    transition: all .4s;
+}
+.news__item:last-child{
+    margin-bottom: 5px
+}
+.news__item:hover{
+    background-color: rgb(255, 238, 238);
+}
+.news__bottom{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 9px
+}
+a{
+    color : black;
+    text-decoration: none;
+}
+.news__text{
+    width: 90%;
+    border-right: black solid 3px;
+    padding-right: 5px;
+}
+.news__title{
+    font-weight: 600;
+    line-height: 30px;
+    font-size: 23px;
+    transition: all .2s;
+}
+.news__title:hover{
+    color: rgb(197, 17, 17);
+}
+.news__author{
+    opacity: .5;
+}
+.news__author span{
+    font-weight: 600;
+}
+.news__time{
+    opacity: .5;
+}
+.news__score{
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+}
+.news__scoreN{
+    font-weight: 900;
+    font-size: 25px;
+    position: absolute;
+    opacity: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.news__scoreL{
+    opacity: .3;
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%)
+}
+.button{
+    cursor: pointer;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: white;
+    padding: 10px 40px 10px 10px;
+    position: relative;
+    margin: 15px auto 30px;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.button:after{
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 15%;
+    right: 4px;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 25px;
+    background-image: url(../../assets/reload.png);
+    transition: all 5s;
+}
+.disabled_button:after{
+    transform: rotate(3600deg);
+}
+.preloader__bottom{
+    margin: 0 auto;
+    width: 200px;
+    display: block;
+}
+
+@media(max-width: 540px){
+    .news__title{
+        line-height: 30px;
+        font-size: 20px;
+        transition: all .2s;
+    }
+    .news__scoreN{
+        font-size: 20px;
+    }
+    .news__scoreL{
+        font-size: 10px;
+        left: 5px
+    }
+}
+@media(max-width: 420px){
+    .news__title{
+        line-height: 20px;
+        font-size: 16px;
+        transition: all .2s;
+    }
+    .news__scoreN{
+        font-size: 15px;
+    }
+}

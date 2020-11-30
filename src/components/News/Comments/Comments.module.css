@@ -1,0 +1,96 @@
+.wrapper{
+    background: aliceblue; 
+    /* box-shadow: 12px 29px 81px 0px rgba(0,0,0,0.35); */
+    padding: 0 20px 20px 20px;
+}
+.comments{
+    text-align: left;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    transition: all 1s;
+}
+.comments:last-child{
+    margin-bottom: 0;
+}
+.comment__items{
+    background-color:#ffe2e2 ;
+    cursor: pointer;
+}
+.comment__initial{
+    font-weight: 400;
+    border: 1px solid black;
+    padding: 10px;
+}
+.low{
+    margin-bottom: 8px;
+    border: 1px solid black;
+    padding: 10px;
+}
+.clicked{
+    border: 2px solid black;
+    background-color: #F4F7EE;
+    margin-bottom: 8px;
+
+}
+.comments div{
+    padding-left: 40px;
+}
+.author{
+    font-weight: 600;
+    margin-right: 6px;
+}
+.top{
+    border: 1px solid black;
+    border-bottom: none;
+    line-height: 23px;
+}
+.title {
+    padding: 50px 20px;
+    text-align: center;
+    border-top: solid #fff 5px;
+} 
+.title h1 {
+    font-family: 'Merriweather', serif;
+    position: relative;
+    color: #C44737;
+    font-size: 50px;
+    font-weight: normal;
+    padding: 8px 20px 7px 20px;
+    border: 4px solid;
+    display: inline-block;
+    margin: 0;
+    line-height: 1;
+}
+.title h1:before {
+    content: ""; 
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    top: -28px;
+    left: -28px;
+    border: 4px solid #C44737;
+    box-sizing: border-box;
+}
+.title h1:after {
+    content: ""; 
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    bottom: -28px;
+    right: -28px;
+    border: 4px solid #C44737;
+    box-sizing: border-box;
+}
+  
+  /* color: #c44737; */
+@media(max-width: 360px){
+    .title h1{
+        font-size: 35px;
+    }
+}
+@media(max-width: 280px){
+    .title h1{
+        font-size: 24px;
+    }
+}
