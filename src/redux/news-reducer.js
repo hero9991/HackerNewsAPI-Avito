@@ -20,7 +20,6 @@ const newsReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_ITEMS:
             return {
-
                 ...state, items: state.items.length !== 0 && action.item.type === 'story'
                     ? [action.item]
                     : [...state.items, action.item]
@@ -43,28 +42,28 @@ const newsReducer = (state = initialState, action) => {
     }
 }
 
-const setItems = (item) => ({
+export const setItems = (item) => ({
     type: SET_ITEMS,
     item
 })
-const setchunkOfItems = (chunk) => ({
+export const setChunkOfItems = (chunk) => ({
     type: SET_CHUNK,
     chunk
 })
-const addKids = (chunk, id) => ({
+export const addKids = (chunk, id) => ({
     type: ADD_KIDS,
     chunk,
     id
 })
-const togglePreloaderBottom = (isPreloadedBottom) => ({
+export const togglePreloaderBottom = (isPreloadedBottom) => ({
     type: TOGGLE_PRELOADER_BOTTOM,
     isPreloadedBottom
 })
-const togglePreloader = (isPreloaded) => ({
+export const togglePreloader = (isPreloaded) => ({
     type: TOGGLE_PRELOADER,
     isPreloaded
 })
-const toggleDisable = (isDisabled) => ({
+export const toggleDisable = (isDisabled) => ({
     type: TOGGLE_DISABLE,
     isDisabled
 })
@@ -98,7 +97,7 @@ export const requestItemsByChunk = (id) => async (dispatch) => {
 }
 export const requestItemsForReload = (id) => async (dispatch) => {
     await dispatch(requestItemsByChunk(id));
-    dispatch(setchunkOfItems(chunkOfItems));
+    dispatch(setChunkOfItems(chunkOfItems));
     chunkOfItems = [];
 }
 export const requestMainKids = (id, items) => async (dispatch) => {

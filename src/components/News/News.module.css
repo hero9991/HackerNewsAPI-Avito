@@ -86,7 +86,9 @@
     color: #000000;
     font-weight: 600;
 }
-
+.delleted{
+    color: red;
+}
 
 @media (max-height: 970px){
     .text__wrapper > span {
@@ -132,7 +134,7 @@
 
 @media(max-width: 770px){
     .text__wrapper > span {
-        margin: 80px 40px 80px;
+        margin: 50px 40px 50px;
         font-size: 20px;
     }
 }

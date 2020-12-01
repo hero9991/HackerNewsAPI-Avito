@@ -34,23 +34,23 @@ const mainReducer = (state = initialState, action) => {
     }
 }
 
-const setIds = (ids) => ({
+export const setIds = (ids) => ({
     type: SET_IDS,
     ids
 })
-const setStories = (stories) => ({
+export const setStories = (stories) => ({
     type: SET_STORIES,
     stories
 })
-const togglePreloader = (isPreloaded) => ({
+export const togglePreloader = (isPreloaded) => ({
     type: TOGGLE_PRELOADER,
     isPreloaded
 })
-const togglePreloaderBottom = (isPreloadedBottom) => ({
+export const togglePreloaderBottom = (isPreloadedBottom) => ({
     type: TOGGLE_PRELOADER_BOTTOM,
     isPreloadedBottom
 })
-const toggleDisable = (isDisabled) => ({
+export const toggleDisable = (isDisabled) => ({
     type: TOGGLE_DISABLE,
     isDisabled
 })

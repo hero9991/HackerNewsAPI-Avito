@@ -29,7 +29,7 @@ const News = ({ items, isPreloaded, isDisabled, idOfStory, requestAllKids, isCli
         </div>
     } else return <div className={c.text__wrapper}>
         <span className={c.link}><NavLink to='/HackerNewsAPI-Avito'>News list</NavLink></span>
-        <span>NEWS DELETED</span>
+        <span className={c.delleted}>NEWS DELETED</span>
     </div>
 }
 
