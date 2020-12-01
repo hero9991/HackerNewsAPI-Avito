@@ -1,4 +1,4 @@
-.news__item{
+.item{
     display: flex;
     justify-content: space-between;
     max-width: 1050px;
@@ -8,13 +8,13 @@
     min-height: 70px;
     transition: all .4s;
 }
-.news__item:last-child{
+.item:last-child{
     margin-bottom: 5px
 }
-.news__item:hover{
+.item:hover{
     background-color: rgb(255, 238, 238);
 }
-.news__bottom{
+.bottom{
     display: flex;
     justify-content: space-between;
     padding-top: 9px
@@ -23,35 +23,35 @@ a{
     color : black;
     text-decoration: none;
 }
-.news__text{
+.text{
     width: 90%;
     border-right: black solid 3px;
     padding-right: 5px;
 }
-.news__title{
+.title{
     font-weight: 600;
     line-height: 30px;
     font-size: 23px;
     transition: all .2s;
 }
-.news__title:hover{
+.title:hover{
     color: rgb(197, 17, 17);
 }
-.news__author{
+.author{
     opacity: .5;
 }
-.news__author span{
+.author span{
     font-weight: 600;
 }
-.news__time{
+.time{
     opacity: .5;
 }
-.news__score{
+.score{
     text-align: center;
     margin: 0 auto;
     position: relative;
 }
-.news__scoreN{
+.score__num{
     font-weight: 900;
     font-size: 25px;
     position: absolute;
@@ -60,7 +60,7 @@ a{
     top: 50%;
     transform: translate(-50%, -50%);
 }
-.news__scoreL{
+.score__text{
     opacity: .3;
     position: absolute;
     top: -7px;
@@ -98,26 +98,26 @@ a{
 
 
 @media(max-width: 540px){
-    .news__title{
+    .title{
         line-height: 30px;
         font-size: 20px;
         transition: all .2s;
     }
-    .news__scoreN{
+    .score__num{
         font-size: 20px;
     }
-    .news__scoreL{
+    .score__text{
         font-size: 10px;
         left: 5px
     }
 }
 @media(max-width: 420px){
-    .news__title{
+    .title{
         line-height: 20px;
         font-size: 16px;
         transition: all .2s;
     }
-    .news__scoreN{
+    .score__num{
         font-size: 15px;
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import c from './Comments.module.css';
 import { getDiffOfDate } from '../../../utils/getDate';
-import preloader1 from '../../../assets/preloader-bottom-news.gif'
+import preloaderBottom from '../../../assets/preloader-bottom-news.gif'
 
 const Comments = ({ items, isPreloaded, isClicked, addChildrens, isPreloadedBottom}) => {
 
@@ -10,7 +10,7 @@ const Comments = ({ items, isPreloaded, isClicked, addChildrens, isPreloadedBott
     return <div className={c.wrapper}>
         <div className={c.title}><h1>Comments</h1></div>
         <ActiveComment addChildrens={addChildrens} items={items} comments={items[0].childrens} isClicked={isClicked} />
-        {isPreloadedBottom && <img className='preloader__bottom-news' src={preloader1} alt='' />}
+        {isPreloadedBottom && <img className='preloader__bottom-news' src={preloaderBottom} alt='' />}
     </div>
 }
 

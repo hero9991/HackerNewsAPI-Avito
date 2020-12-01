@@ -6,7 +6,7 @@ const TOGGLE_PRELOADER = 'NEWS_REDUCER/TOGGLE_PRELOADER';
 const TOGGLE_PRELOADER_BOTTOM = 'NEWS_REDUCER/TOGGLE_PRELOADER_BOTTOM';
 const TOGGLE_DISABLE = 'NEWS_REDUCER/TOGGLE_DISABLE';
 const ADD_KIDS = 'NEWS_REDUCER/ADD_KID';
-
+const RELOAD = 'NEWS_REDUCER/RELOAD'
 
 // const SET_CHUNK = 'NEWS-REDUCER/SET_CHUNK'
 
@@ -38,6 +38,8 @@ const newsReducer = (state = initialState, action) => {
             return { ...state, isPreloadedBottom: action.isPreloadedBottom }
         case TOGGLE_DISABLE:
             return { ...state, isDisabled: action.isDisabled }
+            case RELOAD:
+                return {...state, items: action.items}
         default: return state
     }
 }
@@ -67,42 +69,39 @@ export const toggleDisable = (isDisabled) => ({
     type: TOGGLE_DISABLE,
     isDisabled
 })
-
+const reload = (items) => ({
+    type: RELOAD,
+    items
+})
 
 let chunkOfItems = []
+
+const callRecursion = async (response, dispatch, recursiveRequest) => {
+    if (response.data && response.data.kids) {
+        for (let i = 0; i < response.data.kids.length; i++) {
+            await dispatch(recursiveRequest(response.data.kids[i]));
+        }
+    }
+}
 export const requestItemsByItem = (id) => async (dispatch) => {
+    debugger
     dispatch(togglePreloaderBottom(true));
     dispatch(toggleDisable(true));
     const response = await API.getItem(id);
     dispatch(setItems(response.data))
     response.data.type === 'story' && dispatch(togglePreloader(false));
-    if (response.data && response.data.kids) {
-        for (let i = 0; i < response.data.kids.length; i++) {
-            await dispatch(requestItemsByItem(response.data.kids[i]));
-        }
-    }
+    await callRecursion(response, dispatch, requestItemsByItem)
     dispatch(toggleDisable(false));
     dispatch(togglePreloaderBottom(false));
 }
 export const requestItemsByChunk = (id) => async (dispatch) => {
-    dispatch(toggleDisable(true));
     const response = await API.getItem(id);
     chunkOfItems.push(response.data);
-    if (response.data && response.data.kids) {
-        for (let i = 0; i < response.data.kids.length; i++) {
-            await dispatch(requestItemsByChunk(response.data.kids[i]));
-        }
-    }
-    dispatch(toggleDisable(false));
-}
-export const requestItemsForReload = (id) => async (dispatch) => {
-    await dispatch(requestItemsByChunk(id));
-    dispatch(setChunkOfItems(chunkOfItems));
-    chunkOfItems = [];
+    await callRecursion(response, dispatch, requestItemsByChunk)
 }
 export const requestMainKids = (id, items) => async (dispatch) => {
     dispatch(togglePreloader(true));
-    await dispatch(requestItemsByItem(id)); //стирает childrensov
+    await dispatch(requestItemsByItem(id)); //стирает childrensov, requestkids zapustitsya sam
 }
 export const requestKids = (id, items) => async (dispatch) => {
     let chunkOfKids = [];
@@ -114,9 +113,20 @@ export const requestKids = (id, items) => async (dispatch) => {
         dispatch(addKids(chunkOfKids, id));
     }
 }
-export const requestAllKids = (id, items) => async (dispatch) => {
-    await dispatch(requestItemsForReload(id)) //стирает childrensov
-    await dispatch(requestKids(id, items))
+export const requestFirstKids = (id, items) => async (dispatch) => {
+    dispatch(toggleDisable(true))
+    let chunkOfKids = [];
+    const response = await API.getItem(id);
+    if (response.data && response.data.kids) {
+        for (let i = 0; i < response.data.kids.length; i++) {
+            items.forEach(item => item.id === response.data.kids[i] && chunkOfKids.push(item));
+        }
+        await dispatch(requestItemsByChunk(id))
+        dispatch(toggleDisable(false));
+        chunkOfItems[0].childrens = chunkOfKids;
+        dispatch(reload(chunkOfItems))
+        chunkOfItems = []
+    } else dispatch(toggleDisable(false))
 }
 export const setEmptyChildrens = (id) => (dispatch) => {
     let emptyChunk = [];

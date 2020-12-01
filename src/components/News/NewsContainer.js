@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import News from './News';
-import { setEmptyChildrens, requestMainKids, requestKids, requestAllKids } from '../../redux/news-reducer';
+import { setEmptyChildrens, requestMainKids, requestKids, requestFirstKids } from '../../redux/news-reducer';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getItems } from '../../redux/news-selectors';
 import { getIsPreloaded, getIsPreloadedBottom, getIsDisabled } from '../../redux/news-selectors';
-import preloader from '../../assets/preloader.gif';
+import mainPreloader from '../../assets/main-preloader.gif';
 import { compose } from 'redux';
 
-const NewsContainer = ({ requestMainKids, setEmptyChildrens, items,
-    isPreloaded, isDisabled, requestKids, requestAllKids, isPreloadedBottom, ...props }) => {
+const NewsContainer = ({ requestFirstKids, requestMainKids, setEmptyChildrens, items,
+    isPreloaded, isDisabled, requestKids, isPreloadedBottom, ...props }) => {
 
     const [isClicked, setIsClicked] = useState({});
     const addChildrens = async (id, items) => {
@@ -24,25 +24,27 @@ const NewsContainer = ({ requestMainKids, setEmptyChildrens, items,
             setIsClicked({ ...isClicked, ...stateForClick });
         }
     }
-
+//// pidumat naschet isdisable
     useEffect(() => {
         requestMainKids(props.match.params.id, items);
     }, [])
     useEffect(() => {
         const interval = setInterval(async () => {
-            await requestAllKids(props.match.params.id, items);  //// PROBLEMS!!!!
+            debugger
+            if(isDisabled) return null
+            await requestFirstKids(props.match.params.id, items);  //// PROBLEMS!!!!
             setIsClicked({})
-        }, 800000)
+        }, 60000)
         return () => clearInterval(interval)
-    }, [items.length])
+    }, [items.length, isDisabled])
     useEffect(() => {
         items.length !== 0 && requestKids(props.match.params.id, items);
     }, [items.length, items.length && items[0].childrens && items[0].childrens.length, props.match.params.id])
 
     return isPreloaded
-        ? <img className='preloader' src={preloader} alt='' />
+        ? <img className='preloader' src={mainPreloader} alt='' />
         : <News items={items} isPreloaded={isPreloaded}
-            idOfStory={props.match.params.id} isDisabled={isDisabled} requestAllKids={requestAllKids} addChildrens={addChildrens} isClicked={isClicked} setIsClicked={setIsClicked} isPreloadedBottom={isPreloadedBottom} />
+        requestFirstKids={requestFirstKids} idOfStory={props.match.params.id} isDisabled={isDisabled} addChildrens={addChildrens} isClicked={isClicked} setIsClicked={setIsClicked} isPreloadedBottom={isPreloadedBottom} />
 }
 
 
@@ -54,6 +56,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default compose(
-    connect(mapStateToProps, { requestMainKids, setEmptyChildrens, requestKids, requestAllKids }),
+    connect(mapStateToProps, { requestFirstKids, requestMainKids, setEmptyChildrens, requestKids }),
     withRouter
 )(NewsContainer);

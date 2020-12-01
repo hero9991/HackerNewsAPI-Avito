@@ -3,7 +3,7 @@ import Main from './Main';
 import { connect } from 'react-redux';
 import { requestIds, requestStories, reloadStories } from '../../redux/main-reducer';
 import { getIds, getStories, getIsPreloaded, getIsPreloadedBottom, getIsDisabled } from '../../redux/main-selectors';
-import preloader from '../../assets/preloader.gif';
+import mainPreloader from '../../assets/main-preloader.gif';
 
 const MainContainer = ({ requestIds, requestStories, reloadStories, idsOfNewStories,
     stories, isPreloaded, isDisabled, isPreloadedBottom }) => {
@@ -14,14 +14,16 @@ const MainContainer = ({ requestIds, requestStories, reloadStories, idsOfNewStor
     }, [requestIds, requestStories, idsOfNewStories.length])
     useEffect(() => {
         const interval = setInterval(() => {
+            debugger
+            if (isDisabled) return null
             if (idsOfNewStories.length > 100) {
-                reloadStories(idsOfNewStories);  //PROVERIT
+                reloadStories(idsOfNewStories);  
             }
         }, 60000)
         return () => clearInterval(interval);
-    }, [idsOfNewStories.length])
+    }, [idsOfNewStories.length, isDisabled])
 
-    if (isPreloaded) return <img className='preloader' src={preloader} alt='' />
+    if (isPreloaded) return <img className='preloader' src={mainPreloader} alt='' />
     return <Main stories={stories} reloadStories={reloadStories} idsOfNewStories={idsOfNewStories}
         isDisabled={isDisabled} isPreloadedBottom={isPreloadedBottom} />
 }
