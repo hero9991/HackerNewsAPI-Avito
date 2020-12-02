@@ -64,6 +64,10 @@
 }
 .text__wrapper > span a{
     font-family: 'Merriweather', serif;
+    color: #6d6d6d;
+    transition: all .5s
+}
+.text__wrapper > span a:hover{
     color: #000;
 }
 .text__wrapper > span:before {
@@ -76,12 +80,6 @@
     border: 4px solid #000;
     box-sizing: border-box;
 }
-.link{
-    transition: all .3s;
-}
- .link:hover{
-     opacity: 1 
- }
  .count, .author, .data, .title{
     color: #000000;
     font-weight: 600;

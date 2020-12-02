@@ -155,18 +155,18 @@ export default newsReducer;
 
 
 
-export const requestFirstKids = (id, items) => async (dispatch) => {
-    dispatch(toggleDisable(true))
-    let chunkOfKids = [];
-    const response = await API.getItem(id);
-    if (response.data && response.data.kids) {
-        for (let i = 0; i < response.data.kids.length; i++) {
-            items.forEach(item => item.id === response.data.kids[i] && chunkOfKids.push(item));
-        }
-        await dispatch(requestItemsByChunk(id))
-        chunkOfItems[0].childrens = chunkOfKids;
-        dispatch(reload(chunkOfItems))
-        chunkOfItems = []
-    }
-    dispatch(toggleDisable(false))
-}
+// export const requestFirstKids = (id, items) => async (dispatch) => {
+//     dispatch(toggleDisable(true))
+//     let chunkOfKids = [];
+//     const response = await API.getItem(id);
+//     if (response.data && response.data.kids) {
+//         for (let i = 0; i < response.data.kids.length; i++) {
+//             items.forEach(item => item.id === response.data.kids[i] && chunkOfKids.push(item));
+//         }
+//         await dispatch(requestItemsByChunk(id))
+//         chunkOfItems[0].childrens = chunkOfKids;
+//         dispatch(reload(chunkOfItems))
+//         chunkOfItems = []
+//     }
+//     dispatch(toggleDisable(false))
+// }

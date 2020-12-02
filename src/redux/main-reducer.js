@@ -59,7 +59,7 @@ export const requestIds = () => async (dispatch) => {
     const response = await API.getIdsOfNewStories();
     dispatch(setIds(response.data));
 }
-const storiesPattern = async (ids, dispatch, API, denominator) => {
+const requestStoriesPattern = async (ids, dispatch, API, denominator) => {
     dispatch(toggleDisable(true));
     let i = 0;
     let chunk = [];
@@ -80,10 +80,10 @@ const storiesPattern = async (ids, dispatch, API, denominator) => {
 export const requestStories = (ids) => async (dispatch) => {
     dispatch(togglePreloader(true));
     dispatch(togglePreloaderBottom(true));
-    storiesPattern(ids, dispatch, API, 10);  ///разделить!!!
+    requestStoriesPattern(ids, dispatch, API, 10);  ///разделить!!!
 }
 export const reloadStories = (ids) => async (dispatch) => {
-    storiesPattern(ids, dispatch, API, 100);  //разделить!!!
+    requestStoriesPattern(ids, dispatch, API, 100);  //разделить!!!
 }
 
 

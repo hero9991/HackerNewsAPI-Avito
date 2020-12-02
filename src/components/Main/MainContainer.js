@@ -13,14 +13,13 @@ const MainContainer = ({ requestIds, requestStories, reloadStories, idsOfNewStor
         if (stories.length > 0) reloadStories(idsOfNewStories)
     }, [requestIds, requestStories, idsOfNewStories.length])
     useEffect(() => {
-        const interval = setInterval(() => {
-            debugger
+        const interval = setTimeout(() => {
             if (isDisabled) return null
             if (idsOfNewStories.length > 100) {
                 reloadStories(idsOfNewStories);  
             }
         }, 60000)
-        return () => clearInterval(interval);
+        return () => clearTimeout(interval);
     }, [idsOfNewStories.length, isDisabled])
 
     if (isPreloaded) return <img className='preloader' src={mainPreloader} alt='' />

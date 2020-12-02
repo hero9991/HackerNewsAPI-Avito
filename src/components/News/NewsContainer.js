@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import News from './News';
-import { setEmptyChildrens, requestItems, requestKids, requestFirstKids, reloadPage } from '../../redux/news-reducer';
+import { setEmptyChildrens, requestItems, requestKids, reloadPage } from '../../redux/news-reducer';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getItems } from '../../redux/news-selectors';
@@ -8,11 +8,12 @@ import { getIsPreloaded, getIsPreloadedBottom, getIsDisabled } from '../../redux
 import mainPreloader from '../../assets/main-preloader.gif';
 import { compose } from 'redux';
 
-const NewsContainer = ({ reloadPage, requestFirstKids, requestItems, setEmptyChildrens, items,
+const NewsContainer = ({ reloadPage, requestItems, setEmptyChildrens, items,
     isPreloaded, isDisabled, requestKids, isPreloadedBottom, ...props }) => {
         
     const [isClicked, setIsClicked] = useState({});
-    const addChildrens = async (id, items) => {
+    const addChildrens = async (id, items, isDisabled) => {
+        if(isDisabled) return null
         const stateForClick = {};
         if (isClicked[id]) {
             setEmptyChildrens(id);
@@ -29,11 +30,12 @@ const NewsContainer = ({ reloadPage, requestFirstKids, requestItems, setEmptyChi
         requestItems(props.match.params.id);
     }, [])
     useEffect(() => {
-        const interval = setTimeout(async () => {
+        debugger
+        const interval = setTimeout(() => {
             if(isDisabled) return null
-            await reloadPage(props.match.params.id, items); 
+            reloadPage(props.match.params.id, items); 
            // setIsClicked({})  create my own useEffect
-        }, 20000)
+        }, 60000)
         return () => clearTimeout(interval)
     }, [items.length, isDisabled, JSON.stringify(items)])
     useEffect(() => {
@@ -42,8 +44,8 @@ const NewsContainer = ({ reloadPage, requestFirstKids, requestItems, setEmptyChi
 
     return isPreloaded
         ? <img className='preloader' src={mainPreloader} alt='' />
-        : <News items={items} isPreloaded={isPreloaded} reloadPage={reloadPage}
-        requestFirstKids={requestFirstKids} idOfStory={props.match.params.id} isDisabled={isDisabled} addChildrens={addChildrens} isClicked={isClicked} setIsClicked={setIsClicked} isPreloadedBottom={isPreloadedBottom} />
+        : <News items={items} isPreloaded={isPreloaded} reloadPage={reloadPage} idOfStory={props.match.params.id} 
+        isDisabled={isDisabled} addChildrens={addChildrens} isClicked={isClicked} isPreloadedBottom={isPreloadedBottom} />
 }
 
 
@@ -55,6 +57,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default compose(
-    connect(mapStateToProps, { reloadPage, requestFirstKids, requestItems, setEmptyChildrens, requestKids }),
+    connect(mapStateToProps, { reloadPage, requestItems, setEmptyChildrens, requestKids }),
     withRouter
 )(NewsContainer);
