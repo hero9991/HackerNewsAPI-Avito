@@ -5,7 +5,6 @@ import preloaderBottom from '../../../assets/preloader-bottom-news.gif'
 
 const Comments = ({ items, isPreloaded, isClicked, addChildrens, isPreloadedBottom}) => {
 
-
     if (isPreloaded || !items[0] || !items[0].kids || !items[0].childrens) return null
     return <div className={c.wrapper}>
         <div className={c.title}><h1>Comments</h1></div>

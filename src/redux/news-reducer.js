@@ -25,11 +25,11 @@ const newsReducer = (state = initialState, action) => {
                     : [...state.items, action.item]
             }
         case SET_CHUNK:
-            return { ...state, items: [...action.chunk] }
+            return { ...state, items: action.chunk }
         case ADD_KIDS:
             return {
                 ...state, items: state.items.map(item => item.id === +action.id
-                    ? { ...item, childrens: [...action.chunk] }
+                    ? { ...item, childrens: action.chunk }
                     : item)
             }
         case TOGGLE_PRELOADER:
@@ -38,8 +38,8 @@ const newsReducer = (state = initialState, action) => {
             return { ...state, isPreloadedBottom: action.isPreloadedBottom }
         case TOGGLE_DISABLE:
             return { ...state, isDisabled: action.isDisabled }
-            case RELOAD:
-                return {...state, items: action.items}
+        case RELOAD:
+            return { ...state, items: action.items }
         default: return state
     }
 }
@@ -76,6 +76,14 @@ const reload = (items) => ({
 
 let chunkOfItems = []
 
+export const requestItems = (id) => async (dispatch) => {
+    dispatch(togglePreloader(true));
+    dispatch(togglePreloaderBottom(true));
+    dispatch(toggleDisable(true));
+    await dispatch(requestItemsByItem(id)); //стирает childrensov, requestkids zapustitsya sam
+    dispatch(toggleDisable(false));
+    dispatch(togglePreloaderBottom(false));
+}
 const callRecursion = async (response, dispatch, recursiveRequest) => {
     if (response.data && response.data.kids) {
         for (let i = 0; i < response.data.kids.length; i++) {
@@ -84,35 +92,69 @@ const callRecursion = async (response, dispatch, recursiveRequest) => {
     }
 }
 export const requestItemsByItem = (id) => async (dispatch) => {
-    debugger
-    dispatch(togglePreloaderBottom(true));
-    dispatch(toggleDisable(true));
     const response = await API.getItem(id);
     dispatch(setItems(response.data))
     response.data.type === 'story' && dispatch(togglePreloader(false));
     await callRecursion(response, dispatch, requestItemsByItem)
-    dispatch(toggleDisable(false));
-    dispatch(togglePreloaderBottom(false));
 }
 export const requestItemsByChunk = (id) => async (dispatch) => {
     const response = await API.getItem(id);
     chunkOfItems.push(response.data);
     await callRecursion(response, dispatch, requestItemsByChunk)
 }
-export const requestMainKids = (id, items) => async (dispatch) => {
-    dispatch(togglePreloader(true));
-    await dispatch(requestItemsByItem(id)); //стирает childrensov, requestkids zapustitsya sam
+
+const addKidsInChunk = (response, chunkOfKids, items) => {
+    for (let i = 0; i < response.data.kids.length; i++) {
+        items.forEach(item => item.id === response.data.kids[i] && chunkOfKids.push(item));
+    }
 }
 export const requestKids = (id, items) => async (dispatch) => {
     let chunkOfKids = [];
     const response = await API.getItem(id);
     if (response.data && response.data.kids) {
-        for (let i = 0; i < response.data.kids.length; i++) {
-            items.forEach(item => item.id === response.data.kids[i] && chunkOfKids.push(item));
-        }
+        addKidsInChunk(response, chunkOfKids, items);
         dispatch(addKids(chunkOfKids, id));
     }
 }
+
+export const setEmptyChildrens = (id) => (dispatch) => {
+    let emptyChunk = [];
+    dispatch(addKids(emptyChunk, id));
+}
+
+
+export const requestForReload = (id, items, idOfParents) => async (dispatch) => {
+    let chunkOfKids = [];
+    const response = await API.getItem(id);
+    if (response.data && response.data.kids) {
+        addKidsInChunk(response, chunkOfKids, items);
+        id === idOfParents[0] && await dispatch(requestItemsByChunk(id)); //только в первый раз
+        chunkOfItems.forEach(item => { if (item.id === +id) item.childrens = chunkOfKids });
+    }
+}
+export const reloadPage = (id, items) => async (dispatch) => {
+    if (!items[0].childrens) {
+        dispatch(toggleDisable(true));
+        setTimeout(() => dispatch(toggleDisable(false)), 500
+        )
+        return null
+    }
+    dispatch(toggleDisable(true));
+    const idOfParents = [id];
+    items.forEach(item => item.childrens && item.childrens.length > 0 && item.type !== 'story' && idOfParents.push(item.id));
+    for (let i = 0; i < idOfParents.length; i++) await dispatch(requestForReload(idOfParents[i], items, idOfParents));
+    dispatch(reload(chunkOfItems));
+    chunkOfItems = [];
+    dispatch(toggleDisable(false));
+}
+
+export default newsReducer;
+
+
+
+
+
+
 export const requestFirstKids = (id, items) => async (dispatch) => {
     dispatch(toggleDisable(true))
     let chunkOfKids = [];
@@ -122,16 +164,9 @@ export const requestFirstKids = (id, items) => async (dispatch) => {
             items.forEach(item => item.id === response.data.kids[i] && chunkOfKids.push(item));
         }
         await dispatch(requestItemsByChunk(id))
-        dispatch(toggleDisable(false));
         chunkOfItems[0].childrens = chunkOfKids;
         dispatch(reload(chunkOfItems))
         chunkOfItems = []
-    } else dispatch(toggleDisable(false))
+    }
+    dispatch(toggleDisable(false))
 }
-export const setEmptyChildrens = (id) => (dispatch) => {
-    let emptyChunk = [];
-    dispatch(addKids(emptyChunk, id));
-}
-
-
-export default newsReducer;

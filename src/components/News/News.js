@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import c from './News.module.css';
 import { NavLink } from 'react-router-dom';
 import { getDateOfStory } from '../../utils/getDate';
 import Comments from './Comments/Comments';
 
-const News = ({ items, isPreloaded, isDisabled, idOfStory, isClicked, addChildrens, setIsClicked, isPreloadedBottom, requestFirstKids }) => {
+const News = ({ items, reloadPage, isPreloaded, isDisabled, idOfStory, isClicked, addChildrens, setIsClicked, isPreloadedBottom, requestFirstKids }) => {
     if (items.length < 1) return null
     if (items[0] && items[0].url && items[0].title && items[0].time && items[0].by) {
         return <div className={c.news}>
@@ -12,8 +12,8 @@ const News = ({ items, isPreloaded, isDisabled, idOfStory, isClicked, addChildre
                 <div className={c.text__wrapper}>
                     <button disabled={isDisabled} className={c.button + ' ' + (isDisabled && c.disabled_button)}
                         onClick={async () => {
-                            await requestFirstKids(idOfStory, items);
-                            setIsClicked({});
+                            await reloadPage(idOfStory, items);
+                            //setIsClicked({});
                         }}>
                         {isDisabled ? 'The page is updating...' : 'Update'}
                     </button>
