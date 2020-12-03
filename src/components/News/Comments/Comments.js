@@ -4,7 +4,6 @@ import { getDiffOfDate } from '../../../utils/getDate';
 import preloaderBottom from '../../../assets/preloader-bottom-news.gif'
 
 const Comments = ({ items, isPreloaded, isClicked, addChildrens, isPreloadedBottom, isDisabled}) => {
-
     if (isPreloaded || !items[0] || !items[0].kids || !items[0].childrens) return null
     return <div className={c.wrapper}>
         <div className={c.title}><h2>Comments</h2></div>

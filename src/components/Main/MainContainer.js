@@ -11,16 +11,16 @@ const MainContainer = ({ requestIds, requestStories, reloadStories, idsOfNewStor
         if (idsOfNewStories.length === 0) requestIds();
         if (idsOfNewStories.length > 100 && stories.length === 0) requestStories(idsOfNewStories);
         if (stories.length > 0) reloadStories(idsOfNewStories)
-    }, [requestIds, requestStories, idsOfNewStories.length])
+    }, [requestIds, requestStories, reloadStories, idsOfNewStories.length])
     useEffect(() => {
         const interval = setTimeout(() => {
             if (isDisabled) return null
             if (idsOfNewStories.length > 100) {
-                reloadStories(idsOfNewStories);  
+                reloadStories(idsOfNewStories);
             }
         }, 60000)
         return () => clearTimeout(interval);
-    }, [idsOfNewStories.length, isDisabled])
+    }, [reloadStories, idsOfNewStories.length, JSON.stringify(idsOfNewStories), isDisabled])
 
     if (isPreloaded) return <img className='preloader' src={mainPreloader} alt='' />
     return <Main stories={stories} reloadStories={reloadStories} idsOfNewStories={idsOfNewStories}

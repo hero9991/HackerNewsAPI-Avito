@@ -17,12 +17,12 @@ const initialState = {
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_IDS:
-            return { ...state, idsOfNewStories: [...action.ids] }
+            return { ...state, idsOfNewStories: action.ids }
         case SET_STORIES:
             return {
                 ...state, stories: state.stories.length < 100
                     ? [...state.stories, ...action.stories]
-                    : [...action.stories]
+                    : action.stories
             }
         case TOGGLE_PRELOADER:
             return { ...state, isPreloaded: action.isPreloaded }
@@ -69,7 +69,7 @@ const requestStoriesPattern = async (ids, dispatch, API, denominator) => {
         chunk.push(response.data);
         if (chunk.length % denominator === 0) {
             dispatch(setStories(chunk));
-            denominator === 10 && dispatch(togglePreloader(false)); // лишний в случае с chunk
+            denominator === 10 && dispatch(togglePreloader(false)); 
             chunk = [];
         }
         i++
@@ -80,12 +80,10 @@ const requestStoriesPattern = async (ids, dispatch, API, denominator) => {
 export const requestStories = (ids) => async (dispatch) => {
     dispatch(togglePreloader(true));
     dispatch(togglePreloaderBottom(true));
-    requestStoriesPattern(ids, dispatch, API, 10);  ///разделить!!!
+    requestStoriesPattern(ids, dispatch, API, 10);  
 }
 export const reloadStories = (ids) => async (dispatch) => {
-    requestStoriesPattern(ids, dispatch, API, 100);  //разделить!!!
+    requestStoriesPattern(ids, dispatch, API, 100);  
 }
-
-
 
 export default mainReducer;

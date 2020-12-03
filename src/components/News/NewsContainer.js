@@ -10,10 +10,10 @@ import { compose } from 'redux';
 
 const NewsContainer = ({ reloadPage, requestItems, setEmptyChildrens, items,
     isPreloaded, isDisabled, requestKids, isPreloadedBottom, ...props }) => {
-        
+
     const [isClicked, setIsClicked] = useState({});
     const addChildrens = async (id, items, isDisabled) => {
-        if(isDisabled) return null
+        if (isDisabled) return null
         const stateForClick = {};
         if (isClicked[id]) {
             setEmptyChildrens(id);
@@ -28,24 +28,22 @@ const NewsContainer = ({ reloadPage, requestItems, setEmptyChildrens, items,
 
     useEffect(() => {
         requestItems(props.match.params.id);
-    }, [])
+    }, [props.match.params.id, requestItems])
     useEffect(() => {
-        debugger
         const interval = setTimeout(() => {
-            if(isDisabled) return null
-            reloadPage(props.match.params.id, items); 
-           // setIsClicked({})  create my own useEffect
+            if (isDisabled) return null
+            reloadPage(props.match.params.id, items);
         }, 60000)
         return () => clearTimeout(interval)
-    }, [items.length, isDisabled, JSON.stringify(items)])
+    }, [items.length, isDisabled, JSON.stringify(items), props.match.params.id, reloadPage])
     useEffect(() => {
-        items.length !== 0 && requestKids(props.match.params.id, items); //check it
-    }, [items.length, items.length && items[0].childrens && items[0].childrens.length, props.match.params.id])
+        items.length !== 0 && requestKids(props.match.params.id, items); 
+    }, [items.length, props.match.params.id, requestKids])
 
     return isPreloaded
         ? <img className='preloader' src={mainPreloader} alt='' />
-        : <News items={items} isPreloaded={isPreloaded} reloadPage={reloadPage} idOfStory={props.match.params.id} 
-        isDisabled={isDisabled} addChildrens={addChildrens} isClicked={isClicked} isPreloadedBottom={isPreloadedBottom} />
+        : <News items={items} isPreloaded={isPreloaded} reloadPage={reloadPage} idOfStory={props.match.params.id}
+            isDisabled={isDisabled} addChildrens={addChildrens} isClicked={isClicked} isPreloadedBottom={isPreloadedBottom} />
 }
 
 

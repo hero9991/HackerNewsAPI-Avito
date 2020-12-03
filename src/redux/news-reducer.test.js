@@ -1,4 +1,4 @@
-const { default: newsReducer, toggleDisable, togglePreloaderBottom, togglePreloader, setChunkOfItems, addKids, setItems } = require("./news-reducer")
+const { default: newsReducer, toggleDisable, togglePreloaderBottom, togglePreloader, setChunkOfItems, addKids, setItems, reload } = require("./news-reducer")
  
 const state = {
     items: [],
@@ -44,5 +44,10 @@ it('story should replace items', () => {
     let newState = newsReducer(state, action) 
     expect(newState.items).toEqual([{type:'story'}])
 })
+it('items should be replaced', () => {
+    let action = reload([{type:'story'}, {}]) 
+    state.items = [{ id: 1 }, { id: 5 }]
+    let newState = newsReducer(state, action) 
+    expect(newState.items).toEqual([{type:'story'}, {}])
+})
  
-

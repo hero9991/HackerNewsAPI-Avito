@@ -9,6 +9,7 @@
 .preloader{
   max-width: 500px;
   display: block;
+  margin: 20px;
   position: absolute;
   left: 50%;
   top: 50%;
