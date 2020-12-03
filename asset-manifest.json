@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/HackerNewsAPI-Avito/static/css/main.d2585c2a.chunk.css",
-    "main.js": "/HackerNewsAPI-Avito/static/js/main.8d297e91.chunk.js",
-    "main.js.map": "/HackerNewsAPI-Avito/static/js/main.8d297e91.chunk.js.map",
+    "main.css": "/HackerNewsAPI-Avito/static/css/main.1f646e2e.chunk.css",
+    "main.js": "/HackerNewsAPI-Avito/static/js/main.45b38d45.chunk.js",
+    "main.js.map": "/HackerNewsAPI-Avito/static/js/main.45b38d45.chunk.js.map",
     "runtime-main.js": "/HackerNewsAPI-Avito/static/js/runtime-main.7f36a705.js",
     "runtime-main.js.map": "/HackerNewsAPI-Avito/static/js/runtime-main.7f36a705.js.map",
-    "static/js/2.ede09978.chunk.js": "/HackerNewsAPI-Avito/static/js/2.ede09978.chunk.js",
-    "static/js/2.ede09978.chunk.js.map": "/HackerNewsAPI-Avito/static/js/2.ede09978.chunk.js.map",
+    "static/js/2.f2a712c2.chunk.js": "/HackerNewsAPI-Avito/static/js/2.f2a712c2.chunk.js",
+    "static/js/2.f2a712c2.chunk.js.map": "/HackerNewsAPI-Avito/static/js/2.f2a712c2.chunk.js.map",
     "static/js/3.6b242de4.chunk.js": "/HackerNewsAPI-Avito/static/js/3.6b242de4.chunk.js",
     "static/js/3.6b242de4.chunk.js.map": "/HackerNewsAPI-Avito/static/js/3.6b242de4.chunk.js.map",
     "index.html": "/HackerNewsAPI-Avito/index.html",
-    "static/css/main.d2585c2a.chunk.css.map": "/HackerNewsAPI-Avito/static/css/main.d2585c2a.chunk.css.map",
-    "static/js/2.ede09978.chunk.js.LICENSE.txt": "/HackerNewsAPI-Avito/static/js/2.ede09978.chunk.js.LICENSE.txt",
+    "static/css/main.1f646e2e.chunk.css.map": "/HackerNewsAPI-Avito/static/css/main.1f646e2e.chunk.css.map",
+    "static/js/2.f2a712c2.chunk.js.LICENSE.txt": "/HackerNewsAPI-Avito/static/js/2.f2a712c2.chunk.js.LICENSE.txt",
     "static/media/main-preloader.f14be704.gif": "/HackerNewsAPI-Avito/static/media/main-preloader.f14be704.gif",
     "static/media/preloader-bottom-news.e8f649af.gif": "/HackerNewsAPI-Avito/static/media/preloader-bottom-news.e8f649af.gif",
     "static/media/preloader-bottom.7f686c03.gif": "/HackerNewsAPI-Avito/static/media/preloader-bottom.7f686c03.gif",
@@ -19,8 +19,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.7f36a705.js",
-    "static/js/2.ede09978.chunk.js",
-    "static/css/main.d2585c2a.chunk.css",
-    "static/js/main.8d297e91.chunk.js"
+    "static/js/2.f2a712c2.chunk.js",
+    "static/css/main.1f646e2e.chunk.css",
+    "static/js/main.45b38d45.chunk.js"
   ]
 }
