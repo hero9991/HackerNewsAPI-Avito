@@ -27,7 +27,8 @@ const News = ({ items, reloadPage, isPreloaded, isDisabled, idOfStory, isClicked
                     </span>
                 </div>
             </div>
-            <Comments items={items} isPreloaded={isPreloaded} addChildrens={addChildrens} isClicked={isClicked} isPreloadedBottom={isPreloadedBottom} isDisabled={isDisabled} />
+            <Comments items={items} isPreloaded={isPreloaded} addChildrens={addChildrens} isClicked={isClicked}
+                isPreloadedBottom={isPreloadedBottom} isDisabled={isDisabled} />
         </div>
     } else return <div className={c.text__wrapper}>
         <span className={c.link}><NavLink to='/HackerNewsAPI-Avito'>News list</NavLink></span>

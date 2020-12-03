@@ -9,7 +9,6 @@
 .preloader{
   max-width: 500px;
   display: block;
-  margin: 20px;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -25,4 +24,12 @@
   width: 300px;
   padding: 12px 0 0;
   display: block;
+}
+
+
+
+@media(max-width: 500px) {
+  .preloader{
+    max-width: 300px;
+  }
 }
